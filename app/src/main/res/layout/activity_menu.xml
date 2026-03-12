@@ -50,24 +50,30 @@
 
             <Button
                 android:id="@+id/button0"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
 
             <Button
                 android:id="@+id/button1"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
 
             <Button
                 android:id="@+id/button22"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,24 +83,30 @@
 
             <Button
                 android:id="@+id/button3"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
 
             <Button
                 android:id="@+id/button4"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
 
             <Button
                 android:id="@+id/button5"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -104,24 +116,30 @@
 
             <Button
                 android:id="@+id/button6"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
 
             <Button
                 android:id="@+id/button7"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
 
             <Button
                 android:id="@+id/button8"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="x"
+                android:textSize="96sp" />
         </LinearLayout>
     </LinearLayout>
 
