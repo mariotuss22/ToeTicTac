@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/turn_TextView"
+        android:id="@+id/turnAlert"
         android:layout_width="374dp"
         android:layout_height="102dp"
         android:layout_marginBottom="16dp"
@@ -38,6 +38,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="197dp"
+        android:background="#090808"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,13 +54,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
+<<<<<<< Updated upstream
                 android:text="Button" />
+=======
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+>>>>>>> Stashed changes
 
             <Button
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
+<<<<<<< Updated upstream
                 android:text="Button" />
 
             <Button
@@ -68,6 +79,29 @@
                 android:layout_height="133dp"
                 android:layout_weight="1"
                 android:text="Button" />
+=======
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="133dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+>>>>>>> Stashed changes
         </LinearLayout>
 
         <LinearLayout
@@ -80,21 +114,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
+<<<<<<< Updated upstream
                 android:text="Button" />
+=======
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+>>>>>>> Stashed changes
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
+<<<<<<< Updated upstream
                 android:text="Button" />
+=======
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+>>>>>>> Stashed changes
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
+<<<<<<< Updated upstream
                 android:text="Button" />
+=======
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+>>>>>>> Stashed changes
         </LinearLayout>
 
         <LinearLayout
@@ -107,21 +171,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
+<<<<<<< Updated upstream
                 android:text="Button" />
+=======
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+>>>>>>> Stashed changes
 
             <Button
                 android:id="@+id/button7"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
+<<<<<<< Updated upstream
                 android:text="Button" />
+=======
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+>>>>>>> Stashed changes
 
             <Button
                 android:id="@+id/button8"
                 android:layout_width="wrap_content"
                 android:layout_height="133dp"
                 android:layout_weight="1"
+<<<<<<< Updated upstream
                 android:text="Button" />
+=======
+                android:backgroundTint="#FFFFFF"
+                android:padding="0dp"
+                android:text=" "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorLink="#FFFFFF"
+                android:textSize="96sp" />
+>>>>>>> Stashed changes
         </LinearLayout>
     </LinearLayout>
 
