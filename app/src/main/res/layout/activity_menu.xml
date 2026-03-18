@@ -18,11 +18,11 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/turnAlert"
+        android:id="@+id/turn_TextView"
         android:layout_width="374dp"
         android:layout_height="102dp"
         android:layout_marginBottom="16dp"
-        android:text="Bum's Turn"
+        android:text="Wyatts Turn"
         android:textAlignment="center"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,7 +38,6 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="197dp"
-        android:background="#000000"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,62 +46,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="133dp"
-            android:background="#0D0C0C"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button0"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button1"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
 
             <Button
-                android:id="@+id/button2"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:id="@+id/button22"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,57 +77,24 @@
 
             <Button
                 android:id="@+id/button3"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button4"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button5"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
         </LinearLayout>
 
         <LinearLayout
@@ -172,57 +104,24 @@
 
             <Button
                 android:id="@+id/button6"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button7"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button8"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="133dp"
-                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="#262626"
-                android:text=" "
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textColorLink="#FDFDFD"
-                android:textSize="96dp"
-                app:iconTint="#FFFFFF"
-                app:rippleColor="#837C7C"
-                app:strokeColor="#101010"
-                app:strokeWidth="10dp" />
+                android:text="Button" />
         </LinearLayout>
     </LinearLayout>
 
