@@ -14,145 +14,47 @@
         android:layout_marginStart="80dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="288dp"
+        android:max="8"
+        android:progress="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="250dp"
-        android:layout_height="75dp"
+        android:id="@+id/boardSize_txtView"
+        android:layout_width="352dp"
+        android:layout_height="78dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="81dp"
-        android:text="Board Size"
+        android:text="Board Size: 3x3"
         android:textAlignment="center"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <GridLayout
         android:id="@+id/preview_board"
         android:layout_width="350dp"
         android:layout_height="300dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
-        android:orientation="vertical"
+        android:alignmentMode="alignBounds"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:useDefaultMargins="false"
         app:layout_constraintBottom_toTopOf="@+id/boardSize_Slider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/previewButton0"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="116dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="O"
-                android:textSize="50sp" />
-
-            <Button
-                android:id="@+id/previewButton1"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="116dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="O"
-                android:textSize="50sp" />
-
-            <Button
-                android:id="@+id/previewButton2"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="116dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="X"
-                android:textSize="50sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/previewButton3"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="X"
-                android:textSize="50sp" />
-
-            <Button
-                android:id="@+id/previewButton4"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="X"
-                android:textSize="50sp" />
-
-            <Button
-                android:id="@+id/previewButton5"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="O"
-                android:textSize="50sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/previewButton6"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="116dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="O"
-                android:textSize="50sp" />
-
-            <Button
-                android:id="@+id/previewButton7"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="116dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="DRAW"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/previewButton8"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="116dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="X"
-                android:textSize="50sp" />
-        </LinearLayout>
-    </LinearLayout>
+        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
-        android:layout_width="380dp"
-        android:layout_height="250dp"
+        android:layout_width="386dp"
+        android:layout_height="245dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="9dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/finish_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -191,5 +93,17 @@
             android:text="Ultimate TTT"
             android:textSize="25sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginEnd="161dp"
+        android:layout_marginBottom="4dp"
+        android:text="Ready!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,17 +34,19 @@ public class MainActivity extends AppCompatActivity {
 
         startButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, Menu.class);
+            intent.putExtra("boardSize", 3);
+            intent.putExtra("infiniteMode", false);
+            intent.putExtra("gambleMode", false);
+            intent.putExtra("shuffleMode", false);
+            intent.putExtra("singlePlayer", false);
+            intent.putExtra("ultimateTTT", false);
             startActivity(intent);
         });
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, settingsActivity.class);
             startActivity(intent);
         });
-
-
     }
-
-
 
 
 
