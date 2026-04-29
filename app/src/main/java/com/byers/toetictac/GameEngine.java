@@ -202,7 +202,7 @@ public class GameEngine {
         }
         return mini;
     }
-    private boolean checkMiniWin(String[][] b, String p) {
+    public boolean checkMiniWin(String[][] b, String p) {
 
         for (int i = 0; i < 3; i++) {
             if (p.equals(b[i][0]) && p.equals(b[i][1]) && p.equals(b[i][2])) return true;
