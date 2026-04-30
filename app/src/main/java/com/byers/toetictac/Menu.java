@@ -2,6 +2,7 @@ package com.byers.toetictac;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Button;
@@ -9,6 +10,8 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity {
 
@@ -18,7 +21,7 @@ public class Menu extends AppCompatActivity {
     TextView turnAlert, p1Score, p2Score;;
     int boardSize, bgColor, textColor, aiDotCount;
     float currentRed = 20, currentGreen = 20, currentBlue = 20;
-    boolean infinite, gamble, shuffle, single, ultimate, aiThinking, gameOver;
+    boolean infinite, gamble, shuffle, single, ultimate, aiThinking, gameOver, aiLocked = false;
 
     private android.os.Handler aiHandler =
             new android.os.Handler(android.os.Looper.getMainLooper());
@@ -63,6 +66,8 @@ public class Menu extends AppCompatActivity {
         aiDotCount = 0;
         p1Score = findViewById(R.id.p1Score_TextView);
         p2Score = findViewById(R.id.p2Score_TextView);
+        p1Score.setTextSize(25);
+        p2Score.setTextSize(25);
         buildBoard();
         updateTurn();
         updateScoreUI();
@@ -86,7 +91,6 @@ public class Menu extends AppCompatActivity {
     }
 
     public void refresh() {
-
         for (int i = 0; i < board.getChildCount(); i++) {
             Button b = (Button) board.getChildAt(i);
             int r = i / boardSize;
@@ -135,12 +139,7 @@ public class Menu extends AppCompatActivity {
                 Object result = engine.playMove(r, c);
                 refresh();
                 updateTurn();
-
-                if (engine.singlePlayer && !state.xTurn) {
-                    startAiThinking();
-
-                    // simulates thinking delay for fun
-                }
+                checkAndRunAI();
 
                 if (result instanceof int[][]) {
                     int[][] winCells = (int[][]) result;
@@ -170,7 +169,8 @@ public class Menu extends AppCompatActivity {
         }
     }
     private void updateTurn() {
-
+        if (gameOver) return;
+        if (ultimate) return;
         String player = state.xTurn ? "X" : "O";
 
         int textColor;
@@ -178,7 +178,7 @@ public class Menu extends AppCompatActivity {
         if (state.xTurn) {
             textColor = 0xFFFF4444; // red for X
         } else {
-            textColor = 0xFFB388FF; // purple for O (fixed)
+            textColor = 0xFF7A4DFF; // O visible purple
         }
 
         String text;
@@ -210,8 +210,8 @@ public class Menu extends AppCompatActivity {
 
     }
     private void updateScoreUI() {
-        p1Score.setText("Player 1: " + toTally(state.xScore));
-        p2Score.setText("Player 2: " + toTally(state.oScore));
+        p1Score.setText("Player 1: " + toRoman(state.xScore));
+        p2Score.setText("Player 2: " + toRoman(state.oScore));
     }
     private void clearBoardUI() {
 
@@ -234,25 +234,36 @@ public class Menu extends AppCompatActivity {
             state.turnCount = 0;
         }
     }
-    private String toTally(int score) {
-        StringBuilder sb = new StringBuilder();
+    public static String toRoman(int number) {
+        if (number <= 0) return "";
 
-        int groupsOfFive = score / 5;
-        int remainder = score % 5;
+        int[] values = {
+                1000, 900, 500, 400,
+                100, 90, 50, 40,
+                10, 9, 5, 4, 1
+        };
 
-        for (int i = 0; i < groupsOfFive; i++) {
-            sb.append("||||/ ");
+        String[] symbols = {
+                "M", "CM", "D", "CD",
+                "C", "XC", "L", "XL",
+                "X", "IX", "V", "IV", "I"
+        };
+
+        StringBuilder roman = new StringBuilder();
+
+        for (int i = 0; i < values.length; i++) {
+            while (number >= values[i]) {
+                number -= values[i];
+                roman.append(symbols[i]);
+            }
         }
 
-        for (int i = 0; i < remainder; i++) {
-            sb.append("|");
-        }
-
-        return sb.toString().trim();
+        return roman.toString();
     }
 
     // AI code
     private void startAiThinking() {
+        if (aiThinking) return;
         aiThinking = true;
         aiDotCount = 0;
         aiHandler.removeCallbacks(aiRunnable);
@@ -260,16 +271,14 @@ public class Menu extends AppCompatActivity {
         aiRunnable = new Runnable() {
             @Override
             public void run() {
-
                 if (!aiThinking) return;
-
                 String[] states = {
                         "AI thinking",
                         "AI thinking .",
                         "AI thinking ..",
                         "AI thinking ..."
                 };
-                turnAlert.setTextColor(0xFF000000);
+                turnAlert.setTextColor(0xFFB388FF);
                 turnAlert.setText(states[aiDotCount % 4]);
 
                 aiDotCount++;
@@ -277,35 +286,167 @@ public class Menu extends AppCompatActivity {
                 aiHandler.postDelayed(this, 500);
             }
         };
-
         aiHandler.post(aiRunnable);
-
         int delay = 1500 + (int)(Math.random() * 2500);
-
         aiHandler.postDelayed(() -> stopAiThinkingAndMove(), delay);
     }
     private void stopAiThinkingAndMove() {
-
         aiThinking = false;
-
         aiHandler.removeCallbacks(aiRunnable);
-
-        turnAlert.setText("AI ready");
 
         int[] move = engine.getAIMove();
 
         if (move != null) {
-            engine.playMove(move[0], move[1]);
+            Object result = engine.playMove(move[0], move[1]);
+
             refresh();
             updateTurn();
+
+            if (result instanceof int[][]) {
+                int[][] winCells = (int[][]) result;
+
+                if ("X".equals(state.lastMovePlayer)) {
+                    state.xScore++;
+                } else {
+                    state.oScore++;
+                }
+
+                updateScoreUI();
+                animateWinLine(winCells);
+
+                new Handler().postDelayed(() -> {
+                    engine.reset();
+                    clearBoardUI();
+                    refresh();
+                    updateTurn();
+                }, 500);
+            }
+            else if (result instanceof String && result.equals("DRAW")) {
+                showDrawAnimation();
+            }
         }
+
+        aiLocked = false;
+    }
+    private void checkAndRunAI() {
+        if (!single || gameOver) return;
+        if (aiThinking || aiLocked) return;
+        aiLocked = true;
+        startAiThinking();
     }
 
-    //UltimateTTT Code
+    // ULT Ai
+    private void triggerUltimateAI() {
+        if (gameOver) return;
+        if (gameOver || currentBoardRow == -1) return;
+
+        new Handler().postDelayed(() -> {
+
+            if (currentBoardRow == -1) return;
+
+            String[][] mini = state.ultimateBoards[currentBoardRow][currentBoardCol];
+
+            int[] move = getUltimateAIMove(mini);
+
+            if (move == null) return;
+
+            String aiPlayer = state.xTurn ? "X" : "O";
+
+            mini[move[0]][move[1]] = aiPlayer;
+
+            refreshMiniBoard(mini);
+
+            // check win
+            if (engine.checkMiniWin(mini, aiPlayer)) {
+
+                state.ultimateMetaBoard[currentBoardRow][currentBoardCol] = aiPlayer;
+
+                showBoardWonFlash(aiPlayer);
+
+                if (engine.checkUltimateWin(aiPlayer)) {
+                    endGame(aiPlayer + " WINS ULTIMATE (AI)");
+                    return;
+                }
+
+                String tie = resolveUltimateTie();
+                if (tie != null) {
+                    endGame(tie.equals("DRAW")
+                            ? "ULTIMATE DRAW"
+                            : tie + " WINS BY CONTROL");
+                    return;
+                }
+
+                currentBoardRow = -1;
+                currentBoardCol = -1;
+                loadOuterBoard();
+            }
+
+            updateTurn();
+            aiLocked = false;
+
+        }, 800); // AI thinking delay
+    }
+    private int[] getUltimateAIMove(String[][] board) {
+        //  basic moves
+        int[] win = findMiniWinningMove(board, "O");
+        if (win != null) return win;
+
+        // block
+        int[] block = findMiniWinningMove(board, "X");
+        if (block != null) return block;
+
+        // center
+        if (board[1][1] == null) return new int[]{1, 1};
+
+        // corners
+        int[][] corners = {{0,0},{0,2},{2,0},{2,2}};
+        for (int[] c : corners) {
+            if (board[c[0]][c[1]] == null) return c;
+        }
+
+        // random
+        ArrayList<int[]> moves = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == null) {
+                    moves.add(new int[]{i, j});
+                }
+            }
+        }
+
+        if (moves.isEmpty()) return null;
+
+        return moves.get((int)(Math.random() * moves.size()));
+    }
+    private int[] findMiniWinningMove(String[][] b, String player) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (b[i][j] != null) continue;
+                b[i][j] = player;
+                boolean win = engine.checkMiniWin(b, player);
+                b[i][j] = null;
+                if (win) {
+                    return new int[]{i, j};
+                }
+            }
+        }
+
+        return null;
+    }
+    private void checkUltimateAI() {
+        if (gameOver) return;
+        if (!ultimate || !single) return;
+        if (state.xTurn) return;
+        startAiThinking();
+        new Handler().postDelayed(() -> {
+            triggerUltimateAI();
+        }, 1600);
+    }
+
+
+    //View creators for ULT
     private int currentBoardRow = -1;
     private int currentBoardCol = -1;
-
-    //View creators
     private void loadMiniBoard(int br, int bc) {
         int tint = getMiniBoardTint(br, bc);
         board.removeAllViews();
@@ -366,6 +507,8 @@ public class Menu extends AppCompatActivity {
             board.addView(btn);
         }
     }
+
+
     //gameplay Managers
     private void handleUltimateClick(int r, int c) {
         if (gameOver) return;
@@ -386,7 +529,6 @@ public class Menu extends AppCompatActivity {
         String player = state.xTurn ? "X" : "O";
         mini[r][c] = player;
         refreshMiniBoard(mini);
-
         // check win
         if (engine.checkMiniWin(mini, player)) {
             state.ultimateMetaBoard[currentBoardRow][currentBoardCol] = player;
@@ -401,24 +543,8 @@ public class Menu extends AppCompatActivity {
             updateUltimateTurnText();
             loadOuterBoard();
 
-            if (engine.checkUltimateWin(player)) {
-                turnAlert.setTextSize(35);
-                endGame(player + " WINS ULTIMATE (3 IN A ROW)");
-
-                String tieResult = resolveUltimateTie();
-
-                if (tieResult != null) {
-                    if (tieResult.equals("DRAW")) {
-                        turnAlert.setText("ULTIMATE DRAW");
-                    } else {
-                        endGame(tieResult + " WINS BY CONTROL");
-                    }
-                }
-                return;
-
-
-            }
         }
+        checkUltimateAI();
 
         // reset board if draw until win
         if (isMiniDraw(mini)) {
@@ -427,19 +553,22 @@ public class Menu extends AppCompatActivity {
             updateUltimateTurnText();
         }
 
-        state.xTurn = !state.xTurn;
         updateTurn();
         updateUltimateTurnText();
+        checkAndRunAI();
 
     }
     private void refreshMiniBoard(String[][] mini) {
-        for (int i = 0; i < board.getChildCount(); i++) {
-            Button b = (Button) board.getChildAt(i);
-            int r = i / 3;
-            int c = i % 3;
-            b.setText(mini[r][c] == null ? "" : mini[r][c]);
-            b.setTextColor(getPlayerColor(mini[r][c]));
-            b.setShadowLayer(6f, 0f, 0f, 0xFF000000);
+        int index = 0;
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                Button b = (Button) board.getChildAt(index);
+                if (b == null) return;
+                b.setText(mini[r][c] == null ? "" : mini[r][c]);
+                b.setTextColor(getPlayerColor(mini[r][c]));
+                applyPieceGlow(b, mini[r][c]);
+                index++;
+            }
         }
     }
     private boolean isMiniDraw(String[][] mini) {
@@ -458,14 +587,35 @@ public class Menu extends AppCompatActivity {
         int textColor = state.xTurn ? 0xFFFF4444 : 0xFF000000;
         turnAlert.setTextColor(textColor);
 
-        if (currentBoardRow == -1) {
-            turnAlert.setText(player + " Turn - Choose a board");
-        } else {
-            int displayRow = currentBoardRow + 1;
-            int displayCol = currentBoardCol + 1;
+        if (!engine.checkUltimateWin(player)) {
+            if (currentBoardRow == -1) {
+                turnAlert.setText(player + " Turn - Choose a board");
+            } else {
+                int displayRow = currentBoardRow + 1;
+                int displayCol = currentBoardCol + 1;
 
-            turnAlert.setTextSize(40);
-            turnAlert.setText(player + " Turn - \nPlaying in (" + displayRow + ", " + displayCol + ")");
+                turnAlert.setTextSize(40);
+                turnAlert.setText(player + " Turn - \nPlaying in (" + displayRow + ", " + displayCol + ")");
+            }
+        } else if (engine.checkUltimateWin(player)) {
+            turnAlert.setTextSize(35);
+
+            turnAlert.setText(player + " WINS ULTIMATE \n(3 IN A ROW)");
+
+            if (player.equals("X")) {
+                turnAlert.setTextColor(0xFFFF4444);
+            } else {
+                turnAlert.setTextColor(0xFFB388FF);
+            }
+            String tieResult = resolveUltimateTie();
+
+            if (tieResult != null) {
+                if (tieResult.equals("DRAW")) {
+                    turnAlert.setText("ULTIMATE DRAW");
+                } else {
+                    endGame(tieResult + " WINS BY CONTROL");
+                }
+            }
         }
     }
     private String resolveUltimateTie() {
@@ -494,16 +644,24 @@ public class Menu extends AppCompatActivity {
         return "DRAW";
     }
     private void endGame(String resultText) {
+
         gameOver = true;
+
+        // 🚨 FINAL TEXT STATE
         turnAlert.setText(resultText);
         turnAlert.setTextColor(0xFFFFFFFF);
-        // freezes board visually
+        turnAlert.setShadowLayer(0f, 0f, 0f, 0x00000000);
+
+        // freeze board
         for (int i = 0; i < board.getChildCount(); i++) {
             board.getChildAt(i).setEnabled(false);
         }
+
         board.animate()
                 .alpha(0.6f)
                 .setDuration(400);
+
+        // STOP any future UI updates from overriding this
     }
 
     // Animation/Asthetic Codes

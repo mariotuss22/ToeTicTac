@@ -1,7 +1,10 @@
 package com.byers.toetictac;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class GameEngine {
 
@@ -84,39 +87,43 @@ public class GameEngine {
     //Shuffle mode
     public void shuffle() {
         ArrayList<String> pieces = new ArrayList<>();
-        ArrayList<int[]> positions = new ArrayList<>();
 
         // collect all pieces & their positions
         for (int i = 0; i < state.boardSize; i++) {
             for (int j = 0; j < state.boardSize; j++) {
                 if (state.board[i][j] != null) {
                     pieces.add(state.board[i][j]);
-                    positions.add(new int[]{i, j});
+                    Log.d("Shuffle", "Piece added: " + pieces.get(pieces.size() - 1));
+                    state.board[i][j] = null;
+                } else {
+                    pieces.add(null);
                 }
             }
         }
 
-        // shuffle pieces
         Collections.shuffle(pieces);
 
-        // reassign shuffled pieces back into same slots
-        for (int k = 0; k < positions.size(); k++) {
-            int r = positions.get(k)[0];
-            int c = positions.get(k)[1];
-            state.board[r][c] = pieces.get(k);
+        int k = 0;
+        for (int i = 0; i < state.boardSize; i++) {
+            for (int j = 0; j < state.boardSize; j++) {
+                state.board[i][j] = pieces.get(k);
+                k++;
+            }
         }
+        // reassign shuffled pieces back into same slots
+
     }
 
     //Inf mode
     public void applyDecay() {
-        int limit = state.boardSize +2;
-        int[] oldestMove = state.moveHistory.removeFirst();
-        if (!infiniteMode) {
-            return;
-        }
-        if (state.moveHistory.size() <= limit) {
-            return;
-        }
+        if (!infiniteMode) return;
+
+        int limit = state.boardSize + 1;
+
+        // ONLY decay if over limit
+        if (state.moveHistory.size() <= limit) return;
+
+        int[] oldestMove = state.moveHistory.remove(0);
         state.board[oldestMove[0]][oldestMove[1]] = null;
     }
 

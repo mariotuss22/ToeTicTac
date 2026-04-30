@@ -42,19 +42,15 @@ public class settingsActivity extends AppCompatActivity {
             return insets;
         });
         inf_Switch = findViewById(R.id.inf_Switch);
+        inf_Switch.setOnCheckedChangeListener((b, isChecked) -> applyModeRules());
         gamble_Switch = findViewById(R.id.gamble_Switch);
-
         gamble_Switch.setOnCheckedChangeListener((b, isChecked) -> applyModeRules());
-
         shuffle_Switch = findViewById(R.id.shuffle_Switch);
-
         shuffle_Switch.setOnCheckedChangeListener((b, isChecked) -> applyModeRules());
-
         ultimate_Switch = findViewById(R.id.ultimate_Switch);
-
         ultimate_Switch.setOnCheckedChangeListener((b, isChecked) -> applyModeRules());
-
         single_Switch = findViewById(R.id.single_Switch);
+        single_Switch.setOnCheckedChangeListener((b, isChecked) -> applyModeRules());
         preview_board = findViewById(R.id.preview_board);
         boardSize_Slider = findViewById(R.id.boardSize_Slider);
         finish_button = findViewById(R.id.finish_button);
@@ -173,26 +169,49 @@ public class settingsActivity extends AppCompatActivity {
             } else {
                 showModeSass();
             }
-
-
         }
 
         //if ult is on, nothing else is
         if (ultimate_Switch.isChecked()) {
-            Toast.makeText(this,"UltimateTTT disables other modes", Toast.LENGTH_SHORT).show();
-            inf_Switch.setChecked(false);
-            gamble_Switch.setChecked(false);
-            shuffle_Switch.setChecked(false);
-            single_Switch.setChecked(false);
+            if (ultimate_Switch.isChecked() && (inf_Switch.isChecked() || gamble_Switch.isChecked() || shuffle_Switch.isChecked() || single_Switch.isChecked())) {
+                Toast.makeText(this, "UltimateTTT disables other modes besides solo", Toast.LENGTH_SHORT).show();
+                boardSize = 3;
+                boardSize_Slider.setProgress(2);
+                boardSize_Slider.setEnabled(false);
+                boardSize_txtView.setText("3x3 Locked");
 
-            boardSize = 3;
-            boardSize_Slider.setProgress(2);
-            boardSize_Slider.setEnabled(false);
-            boardSize_txtView.setText("3x3 Locked");
+                if (inf_Switch.isChecked()) {
+                    inf_Switch.setChecked(false);
+                }
+                if (gamble_Switch.isChecked()) {
+                    gamble_Switch.setChecked(false);
+                }
+                if (shuffle_Switch.isChecked()) {
+                    shuffle_Switch.setChecked(false);
+                }
+                if (single_Switch.isChecked()) {
+                    single_Switch.setChecked(false);
+                }
+            }
+            if ((!inf_Switch.isChecked() || !gamble_Switch.isChecked() || !shuffle_Switch.isChecked() || !single_Switch.isChecked()) && ultimate_Switch.isChecked()) {
+                boardSize_Slider.setEnabled(true);
+                Toast.makeText(this, "UltimateTTT cannot run with other Modes", Toast.LENGTH_SHORT).show();
 
-            return;
-        } else {
-            boardSize_Slider.setEnabled(true);
+                ultimate_Switch.setChecked(false);
+
+                if (inf_Switch.isChecked()) {
+                    inf_Switch.setChecked(true);
+                }
+                if (gamble_Switch.isChecked()) {
+                    gamble_Switch.setChecked(true);
+                }
+                if (shuffle_Switch.isChecked()) {
+                    shuffle_Switch.setChecked(true);
+                }
+                if (single_Switch.isChecked()) {
+                    single_Switch.setChecked(true);
+                }
+            }
         }
     }
     private void showModeSass() {
